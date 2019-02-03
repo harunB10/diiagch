@@ -11,14 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'AdminController@index')->middleware('auth');
 
-Auth::routes();
+Route::post('/spremi', 'AdminController@save');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/allAds', 'HomeController@showAllAds');
+
+Route::get('/contact', 'ContactController@show');
+
+Route::get('/obrisi/{id}', 'AdminController@delete')->middleware('auth');
+
+Route::get('/ad/{id}', 'HomeController@showAd');

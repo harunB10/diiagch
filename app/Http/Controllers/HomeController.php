@@ -3,26 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ad;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('home');
+        $ads = Ad::orderBy('id', 'desc')->take(3)->get();
+        return view('home', compact('ads'));
     }
+
+    public function showAllAds(){
+        $ads = Ad::all();
+        return view('ads', compact('ads'));
+    }
+
+    public function showAd($id){
+        $ads = Ad::where('id', $id)->get();
+
+        return view('singleAd', compact('ads'));
+    }
+
 }
